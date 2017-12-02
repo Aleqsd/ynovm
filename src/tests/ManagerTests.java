@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import ynovm.controleur.Manager;
 import ynovm.modele.technique.ConnexionException;
+import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
 import ynovm.stockage.DaoJPA;
 import ynovm.utilitaire.EtatStation;
@@ -34,12 +35,15 @@ class ManagerTests {
 			m.redemarrer(0);
 		} catch (StationException e) {
 			fail("N'aurait pas dû lever une exception");
+		} catch (ProfileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		assertEquals(EtatStation.REDEMARRAGE, m.getPOJOs().get(0).getEtat());
 	}
 
 	@Test
-	void testAjouter() {
+	void testAjouter() throws ProfileException {
 		DaoJPA jpa = null;
 		int nb = 0;
 		nb = jpa.lireTous().size();
@@ -50,7 +54,7 @@ class ManagerTests {
 	}
 
 	@Test
-	void testSupprimer(int id) {
+	void testSupprimer(int id) throws ProfileException {
 		DaoJPA jpa = null;
 		int nb = 0;
 		nb = jpa.lireTous().size();

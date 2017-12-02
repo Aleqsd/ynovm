@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ynovm.modele.technique.ConnexionException;
+import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
@@ -20,7 +21,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRedemarrer() {
+	void testRedemarrer() throws ProfileException {
 		try {
 			y.redemarrer(1);
 			assertTrue(true);
@@ -36,7 +37,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testSupprimer() {
+	void testSupprimer() throws ProfileException {
 		try {
 			y.redemarrer(1);
 			assertTrue(true);
@@ -52,7 +53,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRechercherParID() {
+	void testRechercherParID() throws ProfileException {
 		try {
 			y.rechercherParID(1);
 			assertTrue(true);
@@ -68,7 +69,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRechercherParNom() {
+	void testRechercherParNom() throws ProfileException {
 		try {
 			y.rechercherParNom("Paris");
 			assertTrue(true);
@@ -84,7 +85,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRechercherParLoc() {
+	void testRechercherParLoc() throws ProfileException {
 		try {
 			y.rechercherParLoc("Paris");
 			assertTrue(true);
@@ -100,7 +101,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRechercherParEtat() {
+	void testRechercherParEtat() throws ProfileException {
 		try {
 			y.rechercherParEtat(EtatStation.values()[1]);
 			assertTrue(true);
@@ -116,7 +117,7 @@ class YnovMTests {
 	}
 
 	@Test
-	void testRechercherParType() {
+	void testRechercherParType() throws ProfileException {
 		try {
 			y.rechercherParType(TypeStation.values()[1]);
 			assertTrue(true);

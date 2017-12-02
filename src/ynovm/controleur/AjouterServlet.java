@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ynovm.modele.technique.ProfileException;
 import ynovm.utilitaire.TypeStation;
 
 /**
@@ -55,9 +56,17 @@ public class AjouterServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		
 		
-		Manager.getInstance().ajouter(Integer.parseInt(id), Integer.parseInt(x), Integer.parseInt(y), nom, localisation, Double.parseDouble(temperature),
-				Double.parseDouble(hygrometrie), Integer.parseInt(nebulosite), Integer.parseInt(anemometrie), Integer.parseInt(pluviometrie),
-				remarques, TypeStation.valueOf(type));
+		try {
+			Manager.getInstance().ajouter(Integer.parseInt(id), Integer.parseInt(x), Integer.parseInt(y), nom, localisation, Double.parseDouble(temperature),
+					Double.parseDouble(hygrometrie), Integer.parseInt(nebulosite), Integer.parseInt(anemometrie), Integer.parseInt(pluviometrie),
+					remarques, TypeStation.valueOf(type));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProfileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("message", "OK");
 		
 		response.sendRedirect("choice.jsp");

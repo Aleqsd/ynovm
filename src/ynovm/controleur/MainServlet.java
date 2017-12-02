@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
 import ynovm.service.StationPOJO;
 
@@ -58,7 +59,7 @@ public class MainServlet extends HttpServlet {
 			try {
 				Manager.getInstance().redemarrer(Integer.parseInt(id));
 				request.setAttribute("message", "OK");
-			} catch (StationException e) {
+			} catch (StationException | NumberFormatException | ProfileException e) {
 				request.setAttribute("message", e.getMessage());
 			}
 		} else if ("supprimer".equals(action)) {
@@ -67,6 +68,12 @@ public class MainServlet extends HttpServlet {
 				request.setAttribute("message", "OK");
 			} catch (StationException e) {
 				request.setAttribute("message", e.getMessage());
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProfileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
