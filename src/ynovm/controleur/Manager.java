@@ -62,6 +62,29 @@ public final class Manager {
 		}
 
 	}
+	private void initEJBAutonome() {
+		List<StationPOJO> tmp = null;
+		InitialContext contexteWildFly = null;
+		Properties env = null;
+		DaoRemote daoLocal = null;
+
+		env = new Properties();
+		env.put("jboss.naming.client.ejb.context", true);
+		env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+		env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+
+		try {
+			contexteWildFly = new InitialContext(env);
+			daoLocal = (DaoRemote) contexteWildFly.lookup("//stationAutonome/DaoJPA!autonome.stockage.DaoRemote");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tmp = daoLocal.lireTous();
+		for (StationPOJO cp : tmp) {
+			lesStations.add(new StationManagee(cp, daoLocal));
+		}
+	}
 
 	// manager est un singleton
 	public static Manager getInstance() {
