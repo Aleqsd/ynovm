@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/styles/style.css" rel="stylesheet" type="text/css">
 <title>Gestion météo Ynov</title>
 </head>
 <body>
@@ -17,7 +17,6 @@
 			<input type="submit" value="Valider" />
 		</p>
 		<div>${authentification}</div>
-		<!-- TODO: TESTER CETTE PAGE -->
 	</form>
 </body>
 </html>

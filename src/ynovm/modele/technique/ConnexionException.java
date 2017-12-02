@@ -9,7 +9,7 @@ public class ConnexionException extends Exception {
 
 	public ConnexionException()
 	{
-		super("mauvait login ou password");
+		super("Nom de compte ou identifiant incorrect");
 	}
 	public ConnexionException(String msg)
 	{

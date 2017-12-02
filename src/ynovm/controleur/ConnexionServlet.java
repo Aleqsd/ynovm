@@ -61,7 +61,7 @@ public class ConnexionServlet extends HttpServlet {
 			Compte c = m.getUtilisateur();
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSessionUser", c);
-			response.sendRedirect("mappemonde.jsp");
+			response.sendRedirect("choice.jsp");
 		
 
 			
