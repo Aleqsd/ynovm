@@ -26,33 +26,41 @@
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
 			<th></th>
-			<th>ID</th>
 			<th>Nom</th>
 			<th>Longitude</th>
 			<th>Latitude</th>
 			<th>Localisation</th>
 			<th>Temperature</th>
+			<th>Etat Temperature</th>
 			<th>Hygrometrie</th>
+			<th>Etat Hygrometrie</th>
 			<th>Nébulosité</th>
+			<th>Etat Nébulosité</th>
 			<th>Anémométrie</th>
+			<th>Etat Anémométrie</th>
 			<th>Pluviométrie</th>
+			<th>Etat Pluviométrie</th>
 			<th>Remarques</th>
 			<th>Type</th>
-			<th>État</th>
+			<th>État Station</th>
 		<tr>
 			<c:forEach var="station" items="${modele}">
 			<tr>
 				<td><input type="radio" value="${station.getId()}"></td>
-				<td>${station.getId()}</td>
 				<td>${station.getNom()}</td>
 				<td>${station.getX()}</td>
 				<td>${station.getY()}</td>
 				<td>${station.getLocalisation()}</td>
 				<td>${station.getTemperature()}</td>
+				<td>${station.getEtat_Temp()}</td>
 				<td>${station.getHygrometrie()}</td>
+				<td>${station.getEtat_Hygro()}</td>
 				<td>${station.getNebulosite()}</td>
+				<td>${station.getEtat_Nebul()}</td>
 				<td>${station.getAnemometre()}</td>
+				<td>${station.getEtat_Anemo()}</td>
 				<td>${station.getPluviometrie()}</td>
+				<td>${station.getEtat_Pluvio()}</td>
 				<td>${station.getRemarques()}</td>
 				<td>${station.getType()}</td>
 				<td>${station.getEtat()}</td>

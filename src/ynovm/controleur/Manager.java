@@ -11,6 +11,7 @@ import javax.naming.NamingException;
 import esclave.stockage.DaoRemote;
 import ynovm.stockage.DaoFactory;
 import ynovm.utilitaire.DaoEnum;
+import ynovm.utilitaire.EtatAppareil;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
 import ynovm.service.Compte;
@@ -62,29 +63,6 @@ public final class Manager {
 		}
 
 	}
-	private void initEJBAutonome() {
-		List<StationPOJO> tmp = null;
-		InitialContext contexteWildFly = null;
-		Properties env = null;
-		DaoRemote daoLocal = null;
-
-		env = new Properties();
-		env.put("jboss.naming.client.ejb.context", true);
-		env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-		env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
-
-		try {
-			contexteWildFly = new InitialContext(env);
-			daoLocal = (DaoRemote) contexteWildFly.lookup("//stationAutonome/DaoJPA!autonome.stockage.DaoRemote");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		tmp = daoLocal.lireTous();
-		for (StationPOJO cp : tmp) {
-			lesStations.add(new StationManagee(cp, daoLocal));
-		}
-	}
 
 	// manager est un singleton
 	public static Manager getInstance() {
@@ -97,10 +75,43 @@ public final class Manager {
 	public void redemarrer(int id) throws StationException {
 		StationManagee sm = null;
 		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id)
+			if (a.getPOJO().getId() == id) {
 				sm = a;
+			}
+				
 		}
 		sm.redemarrer();
+	}
+	
+	public void reinitialiser(int id, String appareil) throws StationException {
+		StationManagee sm = null;
+		for (StationManagee a : lesStations) {
+			if (a.getPOJO().getId() == id) {
+				sm = a;
+			}
+				
+		}
+		sm.reinitialiser(appareil);
+	}
+	
+	public void create_panne(int id, String appareil) throws StationException {
+		StationManagee sm = null;
+		for (StationManagee a : lesStations) {
+			if (a.getPOJO().getId() == id) {
+				sm = a;
+			}				
+		}
+		sm.create_panne(appareil);
+	}
+	
+	public void create_random_mesure_all(int id) {
+		StationManagee sm = null;
+		for (StationManagee a : lesStations) {
+			if (a.getPOJO().getId() == id) {
+				sm = a;
+			}				
+		}
+		sm.create_random_mesure_all();
 	}
 
 	// Ajout d'une nouvelle station autonome par defaut et avec un etat en marche
@@ -119,6 +130,11 @@ public final class Manager {
 		sp.setPluviometrie(pluviometrie);
 		sp.setRemarques(remarques);
 		sp.setEtat(EtatStation.EN_MARCHE);
+		sp.setEtat_Anemo(EtatAppareil.OPERATIONNEL);
+		sp.setEtat_Hygro(EtatAppareil.OPERATIONNEL);
+		sp.setEtat_Temp(EtatAppareil.OPERATIONNEL);
+		sp.setEtat_Pluvio(EtatAppareil.OPERATIONNEL);
+		sp.setEtat_Nebul(EtatAppareil.OPERATIONNEL);
 		sp.setType(type);
 
 		lesStations.add(new StationManagee(sp, DaoFactory.getInstance().getDao(DaoEnum.JPA)));

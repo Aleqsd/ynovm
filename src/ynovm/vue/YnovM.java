@@ -27,6 +27,18 @@ public class YnovM {
 		Manager.getInstance().redemarrer(id);
 	}
 	
+	public void reinitialiser(int id, String appareil) throws StationException {
+		Manager.getInstance().reinitialiser(id, appareil);
+	}
+	
+	public void create_panne(int id, String appareil) throws StationException {
+		Manager.getInstance().create_panne(id, appareil);
+	}
+	
+	public void create_random_mesure_all(int id) {
+		Manager.getInstance().create_random_mesure_all(id);
+	}
+	
 	public String rechercherParID(int id) throws StationException {
 		return Manager.getInstance().getStationById(id);
 	}
@@ -62,6 +74,12 @@ public class YnovM {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		/*z.ajout(1, 7, 8, "AlphaStation", "Bretagne", 17, 4, 5, 8, 7, "RAS", TypeStation.AUTONOME);
+		z.ajout(2, 7, 8, "BetaStation", "Aix", 17, 4, 5, 8, 7, "RAS", TypeStation.ESCLAVE);
+		z.ajout(3, 7, 8, "CharlieStation", "Marseille", 17, 4, 5, 8, 7, "RAS", TypeStation.AUTONOME);
+		z.ajout(4, 7, 8, "DeltaStation", "Paris", 17, 4, 5, 8, 7, "RAS", TypeStation.ESCLAVE);*/
+		
 		System.out.println("-------------AFFICHAGE---------------");
 		z.afficher();
 		System.out.println("----------------SUPPRIMER-------------");		
@@ -82,8 +100,6 @@ public class YnovM {
 		System.out.println("-------------AJOUT---------------");
 		z.ajout(1, 7, 8, "AlphaStation", "Bretagne", 17, 4, 5, 8, 7, "RAS", TypeStation.AUTONOME);
 		z.ajout(2, 7, 8, "BetaStation", "Aix", 17, 4, 5, 8, 7, "RAS", TypeStation.ESCLAVE);
-		//z.ajout(3, 7, 8, "CharlieStation", "Marseille", 17, 4, 5, 8, 7, "RAS", TypeStation.AUTONOME);
-		//z.ajout(4, 7, 8, "DeltaStation", "Paris", 17, 4, 5, 8, 7, "RAS", TypeStation.ESCLAVE);
 		System.out.println("---------------APRES AJOUT-------------");
 		z.afficher();		
 		System.out.println("-----------------------------");
@@ -146,5 +162,37 @@ public class YnovM {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("-----------------AVANT CREATE PANNE---------------");
+		try {
+			z.create_panne(1, "pluviometrie");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("-----------------APRES CREATE PANNE---------------");
+		try {
+			z.rechercherParID(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("-----------------AVANT REINITIALISATION---------------");
+		try {
+			z.reinitialiser(1, "pluviometrie");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("-----------------APRES REINITIALISATION---------------");
+		try {
+			z.rechercherParID(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("-----------------AVANT CREATE RANDOM MESURE ALL APPAREIL---------------");
+		z.create_random_mesure_all(1);
+		System.out.println("-----------------APRES CREATE RANDOM MESURE ALL APPAREIL---------------");
+		z.afficher();
 	}
 }
