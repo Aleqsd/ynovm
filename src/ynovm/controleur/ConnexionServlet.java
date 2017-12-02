@@ -15,7 +15,7 @@ import ynovm.stockage.DaoCompte;
 /**
  * Servlet implementation class ConnexionServlet
  */
-//@WebServlet({ "ConnexionServlet", "connexion" })
+//@WebServlet("/connexion")
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,18 +33,7 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		try {
+try {
 			
 			Manager m = Manager.getInstance();
 			
@@ -55,24 +44,28 @@ public class ConnexionServlet extends HttpServlet {
 				e.printStackTrace();
 				request.setAttribute("authentification", "Compte ou mot de passe incorrect");
 				request.getRequestDispatcher("connexion.jsp").forward(request, response);
-				response.sendRedirect("invalidLogin.jsp"); //TODO : error page
+				//response.sendRedirect("invalidLogin.jsp"); //TODO : error page
 				return;
 			}
 			Compte c = m.getUtilisateur();
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSessionUser", c);
-			response.sendRedirect("mappemonde.jsp");
-		
-
-			
-				
-		
-			
-		}
+			response.sendRedirect("choice.jsp");
+}
 
 		catch (Throwable theException) {
 			System.out.println(theException);
 		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 
 	}
 

@@ -10,8 +10,8 @@
 <body>
 	<center>
 		<ul>
-			<li><a href="tableau.jsp">Tableau</a></li>
-			<li><a href="mappemonde.jsp">Mappemonde</a></li>
+			<li><a href="tableau">Tableau</a></li>
+			<li><a href="mappemonde">Mappemonde</a></li>
 		</ul>
 	</center>
 </body>

@@ -59,12 +59,12 @@ public class YnovM {
 		Manager.getInstance().getStationsByType(type).forEach(System.out::println);
 	}
 	
-	private void connect(String login, String mdp) throws ConnexionException {
+	public void connect(String login, String mdp) throws ConnexionException {
         Manager.getInstance().connexion(login,mdp);
         System.out.println(Manager.getInstance().getUtilisateur().toString());
     }
 	
-	public static void main(String[] args) throws StationException, InterruptedException {
+	public static void main(String[] args) {
 		YnovM z = null;
 		z = new YnovM();
 		
@@ -83,8 +83,18 @@ public class YnovM {
 		System.out.println("-------------AFFICHAGE---------------");
 		z.afficher();
 		System.out.println("----------------SUPPRIMER-------------");		
-		z.supprimer(1);
-		z.supprimer(2);
+		try {
+			z.supprimer(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			z.supprimer(2);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("------------------APRES SUPPRIMER-----------");
 		z.afficher();
 		System.out.println("-------------AJOUT---------------");
@@ -94,32 +104,92 @@ public class YnovM {
 		z.afficher();		
 		System.out.println("-----------------------------");
 		System.out.println("-------------AVANT REDEMARRER----------------");
-		z.redemarrer(1);
-		z.redemarrer(2);
+		try {
+			z.redemarrer(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			z.redemarrer(2);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("--------------APRES REDEMARRER--------------");
 		z.afficher();
 		System.out.println("------------RECHERCHE PAR ID-----------------");
-		System.out.println(z.rechercherParID(1));
+		try {
+			System.out.println(z.rechercherParID(1));
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------RECHERCHE PAR ETAT------------------");
-		z.rechercherParEtat(EtatStation.EN_MARCHE);
+		try {
+			z.rechercherParEtat(EtatStation.EN_MARCHE);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-------------RECHERCHE PAR TYPE----------------");
-		z.rechercherParType(TypeStation.AUTONOME);
+		try {
+			z.rechercherParType(TypeStation.AUTONOME);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("---------------RECHERHCE PAR LOC--------------");
-		z.rechercherParLoc("Paris");
+		try {
+			z.rechercherParLoc("Paris");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-------------RECHERHCE PAR NOM----------------");
-		z.rechercherParNom("CharlieStation");
+		try {
+			z.rechercherParNom("CharlieStation");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-------------SLEEP (15s) ET VERIF STATION REDEMARRAGE---------------");
 		System.out.println("WAIT PLEASE");
-		Thread.sleep(15000);
-		z.afficher();
+		try {
+			Thread.sleep(15000);
+			z.afficher();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------------AVANT CREATE PANNE---------------");
-		z.create_panne(1, "pluviometrie");
+		try {
+			z.create_panne(1, "pluviometrie");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------------APRES CREATE PANNE---------------");
-		z.rechercherParID(1);
+		try {
+			z.rechercherParID(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------------AVANT REINITIALISATION---------------");
-		z.reinitialiser(1, "pluviometrie");
+		try {
+			z.reinitialiser(1, "pluviometrie");
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------------APRES REINITIALISATION---------------");
-		z.rechercherParID(1);
+		try {
+			z.rechercherParID(1);
+		} catch (StationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-----------------AVANT CREATE RANDOM MESURE ALL APPAREIL---------------");
 		z.create_random_mesure_all(1);
 		System.out.println("-----------------APRES CREATE RANDOM MESURE ALL APPAREIL---------------");

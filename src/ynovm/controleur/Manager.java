@@ -253,7 +253,7 @@ public final class Manager {
 			}
 		}
 		if (this.utilisateur == null)
-			throw new ConnexionException();
+			throw new ConnexionException("Echec de connexion");
 	}
 
 	public Compte getUtilisateur() {

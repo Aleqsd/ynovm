@@ -10,16 +10,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Mappemonde - Gestion météo Ynov</title>
+
+<link rel="stylesheet" type="text/css" href="style.css"></link>
+
 </head>
 <body>
 	<form name="fstation" action="main" method="POST">
 		<nav>
 			<ul class="m">
+				<li class="m"><a href="choice.jsp">Retour aux choix</a></li>
 				<li class="m"><a href="ajouter.jsp">Ajouter une station</a></li>
 				<li class="m"><a href="supprimer">Supprimer la station sélectionnée</a></li>
 				<li class="m"><a href="redemarrer">Redémarrer la station sélectionnée</a></li>
 			</ul>
 		</nav>
 	</form>
+	<div><img src="${pageContext.request.contextPath}/images/france_relief.gif" alt="map"></div>
+		<c:forEach var="station" items="${modele}">
+			<td><input type="radio" value="${station.getId()}"></td>
+			<td>${station.getId()}</td>
+			<td>${station.getNom()}</td>
+			<td>${station.getX()}</td>
+			<td>${station.getY()}</td>
+			<td>${station.getLocalisation()}</td>
+			<td>${station.getTemperature()}</td>
+			<td>${station.getHygrometrie()}</td>
+			<td>${station.getNebulosite()}</td>
+			<td>${station.getAnemometre()}</td>
+			<td>${station.getPluviometrie()}</td>
+			<td>${station.getRemarques()}</td>
+			<td>${station.getType()}</td>
+			<td>${station.getEtat()}</td>
+		</c:forEach>
 </body>
 </html>
