@@ -49,8 +49,8 @@ public class SupprimerServlet extends HttpServlet {
 		} catch (StationException e) {
 			request.setAttribute("message", e.getMessage());
 		}
-		
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("mappemonde.jsp").forward(request, response);
+		request.getRequestDispatcher("tableau.jsp").forward(request, response);
 	}
 
 }

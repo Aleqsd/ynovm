@@ -60,7 +60,9 @@ public class AjouterServlet extends HttpServlet {
 				remarques, TypeStation.valueOf(type));
 		request.setAttribute("message", "OK");
 		
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		response.sendRedirect("choice.jsp");
+		
+		
 	}
 
 }
