@@ -1,6 +1,8 @@
 package ynovm.controleur;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ynovm.modele.technique.StationException;
+import ynovm.service.StationPOJO;
 
 /**
  * Servlet implementation class MainServlet
@@ -41,6 +44,12 @@ public class MainServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		
+		List<StationPOJO> tmp = null;
+		tmp = Manager.getInstance().getPOJOs();
+		request.setAttribute("modele", tmp);
+		
+		
 		String action = request.getParameter("action");
 		String id = request.getParameter("id");
 		
@@ -60,6 +69,8 @@ public class MainServlet extends HttpServlet {
 				request.setAttribute("message", e.getMessage());
 			}
 		}
+		
+		
 		
 		request.getRequestDispatcher("tableau.jsp").forward(request, response);
 		request.getRequestDispatcher("mappemonde.jsp").forward(request, response);
