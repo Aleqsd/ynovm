@@ -129,16 +129,6 @@ public final class Manager {
 			throw new ProfileException("Vous ne devez pas être Controleur pour effectuer cette action.");
 	}
 	
-	public void create_panne(int id, String appareil) throws StationException {
-		StationManagee sm = null;
-		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id) {
-				sm = a;
-			}				
-		}
-		sm.create_panne(appareil);
-	}
-	
 	public void create_random_mesure_all(int id) {
 		StationManagee sm = null;
 		for (StationManagee a : lesStations) {

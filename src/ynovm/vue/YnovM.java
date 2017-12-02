@@ -32,10 +32,6 @@ public class YnovM {
 		Manager.getInstance().reinitialiser(id, appareil);
 	}
 	
-	public void create_panne(int id, String appareil) throws StationException {
-		Manager.getInstance().create_panne(id, appareil);
-	}
-	
 	public void create_random_mesure_all(int id) {
 		Manager.getInstance().create_random_mesure_all(id);
 	}
@@ -223,14 +219,6 @@ public class YnovM {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("-----------------AVANT CREATE PANNE---------------");
-		try {
-			z.create_panne(1, "pluviometrie");
-		} catch (StationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("-----------------APRES CREATE PANNE---------------");
 		try {
 			z.rechercherParID(1);
 		} catch (StationException e) {
