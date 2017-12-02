@@ -10,6 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Mappemonde - Gestion météo Ynov</title>
+<link rel="stylesheet" type="text/css" href="style.css"></link>
 </head>
 <body>
 	<form name="fstation" action="main" method="POST">
