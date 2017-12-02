@@ -6,6 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import ynovm.modele.technique.ConnexionException;
+import ynovm.service.Compte;
+import ynovm.stockage.DaoCompte;
  
 /**
  * Servlet implementation class ConnexionServlet
@@ -40,28 +45,29 @@ public class ConnexionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			// TODO: connexion avec daojpa
 			
-			/*
-			Compte compte = new Compte();
-			compte.setUserName(request.getParameter("id"));
-			compte.setPassword(request.getParameter("mdp"));
-
-			compte = CompteDAO.login(compte);
-
-			if (compte.isValid()) {
-
-				HttpSession session = request.getSession(true);
-				session.setAttribute("currentSessionUser", compte);
-				response.sendRedirect("yoloooo.jsp"); // TODO:replacer par la page de météo
-			}
-
-			else {
+			Manager m = Manager.getInstance();
+			
+			try {
+				m.connexion(request.getParameter("id"),request.getParameter("mdp"));
+				
+			}catch(ConnexionException e) {
+				e.printStackTrace();
 				request.setAttribute("authentification", "Compte ou mot de passe incorrect");
 				request.getRequestDispatcher("connexion.jsp").forward(request, response);
-				// response.sendRedirect("invalidLogin.jsp"); //TODO : error page
+				response.sendRedirect("invalidLogin.jsp"); //TODO : error page
+				return;
 			}
-			*/
+			Compte c = m.getUtilisateur();
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentSessionUser", c);
+			response.sendRedirect("mappemonde.jsp");
+		
+
+			
+				
+		
+			
 		}
 
 		catch (Throwable theException) {

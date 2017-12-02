@@ -1,17 +1,17 @@
 package ynovm.modele.technique;
 
 
-public class ConnexionExeption extends Exception {
+public class ConnexionException extends Exception {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ConnexionExeption()
+	public ConnexionException()
 	{
 		super("mauvait login ou password");
 	}
-	public ConnexionExeption(String msg)
+	public ConnexionException(String msg)
 	{
 		super(msg);
 	}

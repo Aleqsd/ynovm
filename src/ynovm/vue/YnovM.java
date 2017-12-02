@@ -3,6 +3,7 @@ package ynovm.vue;
 import java.util.List;
 
 import ynovm.controleur.Manager;
+import ynovm.modele.technique.ConnexionException;
 import ynovm.modele.technique.StationException;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
@@ -46,7 +47,7 @@ public class YnovM {
 		Manager.getInstance().getStationsByType(type).forEach(System.out::println);
 	}
 	
-	private void connect(String login, String mdp) {
+	private void connect(String login, String mdp) throws ConnexionException {
         Manager.getInstance().connexion(login,mdp);
         System.out.println(Manager.getInstance().getUtilisateur().toString());
     }
@@ -55,7 +56,12 @@ public class YnovM {
 		YnovM z = null;
 		z = new YnovM();
 		
-		z.connect("admin","admin");
+		try {
+			z.connect("admin","admin");
+		} catch (ConnexionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("-------------AFFICHAGE---------------");
 		z.afficher();
 		System.out.println("----------------SUPPRIMER-------------");		

@@ -14,7 +14,7 @@ import ynovm.utilitaire.DaoEnum;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
 import ynovm.service.Compte;
-import ynovm.modele.technique.ConnexionExeption;
+import ynovm.modele.technique.ConnexionException;
 import ynovm.modele.technique.StationException;
 import ynovm.modele.technique.StationManagee;
 import ynovm.service.StationPOJO;
@@ -23,7 +23,7 @@ public final class Manager {
 	private static Manager instance = null;
 	private Vector<StationManagee> lesStations;
 	private Compte utilisateur;
-	
+
 	private Manager() {
 		lesStations = new Vector<>();
 		init();
@@ -62,11 +62,10 @@ public final class Manager {
 		}
 
 	}
-	
-	//manager est un singleton
+
+	// manager est un singleton
 	public static Manager getInstance() {
-		if(instance == null)
-		{
+		if (instance == null) {
 			instance = new Manager();
 		}
 		return instance;
@@ -75,15 +74,15 @@ public final class Manager {
 	public void redemarrer(int id) throws StationException {
 		StationManagee sm = null;
 		for (StationManagee a : lesStations) {
-			if(a.getPOJO().getId() == id)
+			if (a.getPOJO().getId() == id)
 				sm = a;
 		}
 		sm.redemarrer();
 	}
 
-	//Ajout d'une nouvelle station autonome par defaut et avec un etat en marche
+	// Ajout d'une nouvelle station autonome par defaut et avec un etat en marche
 	public void ajouter(int id, int x, int y, String nom, String localisation, double temperature, double hygrometrie,
-			int nebulosite, int anemometre, int pluviometrie, String remarques, TypeStation type){
+			int nebulosite, int anemometre, int pluviometrie, String remarques, TypeStation type) {
 		StationPOJO sp = new StationPOJO();
 		sp.setId(id);
 		sp.setX(x);
@@ -98,38 +97,38 @@ public final class Manager {
 		sp.setRemarques(remarques);
 		sp.setEtat(EtatStation.EN_MARCHE);
 		sp.setType(type);
-		
+
 		lesStations.add(new StationManagee(sp, DaoFactory.getInstance().getDao(DaoEnum.JPA)));
 		lesStations.lastElement().ajouter(sp);
 	}
 
-	//suppression d'une station avec l'id indiquer
+	// suppression d'une station avec l'id indiquer
 	public void supprimer(int id) throws StationException {
 		StationManagee sm = null;
 		for (StationManagee a : lesStations) {
-			if(a.getPOJO().getId() == id) {
+			if (a.getPOJO().getId() == id) {
 				sm = a;
 			}
 		}
-		if(sm == null)
-			throw new StationException("Station "+id+" non trouvé !");
+		if (sm == null)
+			throw new StationException("Station " + id + " non trouvé !");
 		sm.supprimer();
 		lesStations.remove(sm);
 	}
-	
+
 	public String getStationById(int id) throws StationException {
 		String ret = "";
 		for (StationManagee a : lesStations) {
 			if (a.getPOJO().getId() == id) {
 				a.checkEtatStation();
 				ret = a.toString();
-			}				
+			}
 		}
 		if (ret == "")
 			throw new StationException();
 		return ret;
 	}
-	
+
 	public List<String> getStationsByName(String name) throws StationException {
 		List<String> ret = null;
 		ret = new Vector<>();
@@ -137,13 +136,13 @@ public final class Manager {
 			if (a.getPOJO().getNom().toLowerCase().contentEquals(name.toLowerCase())) {
 				a.checkEtatStation();
 				ret.add(a.toString());
-			}				
+			}
 		}
 		if (ret.isEmpty())
 			throw new StationException();
 		return ret;
 	}
-	
+
 	public List<String> getStationsByLocalisation(String localisation) throws StationException {
 		List<String> ret = null;
 		ret = new Vector<>();
@@ -151,13 +150,13 @@ public final class Manager {
 			if (a.getPOJO().getLocalisation().toLowerCase().contentEquals(localisation.toLowerCase())) {
 				a.checkEtatStation();
 				ret.add(a.toString());
-			}				
+			}
 		}
 		if (ret.isEmpty())
-			throw new StationException("Pas de station en "+localisation);
+			throw new StationException("Pas de station en " + localisation);
 		return ret;
 	}
-	
+
 	public List<String> getStationsByEtat(EtatStation etat) throws StationException {
 		List<String> ret = null;
 		ret = new Vector<>();
@@ -165,13 +164,13 @@ public final class Manager {
 			if (a.getPOJO().getEtat() == etat) {
 				a.checkEtatStation();
 				ret.add(a.toString());
-			}				
+			}
 		}
 		if (ret.isEmpty())
 			throw new StationException();
 		return ret;
 	}
-	
+
 	public List<String> getStationsByType(TypeStation type) throws StationException {
 		List<String> ret = null;
 		ret = new Vector<>();
@@ -179,7 +178,7 @@ public final class Manager {
 			if (a.getPOJO().getType() == type) {
 				a.checkEtatStation();
 				ret.add(a.toString());
-			}				
+			}
 		}
 		if (ret.isEmpty())
 			throw new StationException();
@@ -204,28 +203,25 @@ public final class Manager {
 		}
 		return ret;
 	}
-	
-	public void connexion(String login, String password) {
-        List<Compte> tmp = null;
-        
-        tmp = DaoFactory.getInstance().getDaoCompte().lireTous();
-        for (Compte c : tmp) {
-            if(c.getlogin().equals(login) && c.getmdp().equals(password))
-                setUtilisateur(new Compte(c.getlogin(),c.getmdp(),c.getProfile().getProfile()));
-        }
-        if (this.utilisateur == null)
-            try {
-                throw new ConnexionExeption();
-            } catch (ConnexionExeption e) {
-                e.printStackTrace();
-            }
-    }
 
-    public Compte getUtilisateur() {
-        return utilisateur;
-    }
+	public void connexion(String login, String password) throws ConnexionException {
+		List<Compte> tmp = null;
 
-    public void setUtilisateur(Compte utilisateur) {
-        this.utilisateur = utilisateur;
-    }
+		tmp = DaoFactory.getInstance().getDaoCompte().lireTous();
+		for (Compte c : tmp) {
+			if (c.getlogin().equals(login) && c.getmdp().equals(password)) {
+				setUtilisateur(new Compte(c.getlogin(), c.getmdp(), c.getProfile().getProfile()));
+			}
+		}
+		if (this.utilisateur == null)
+			throw new ConnexionException();
+	}
+
+	public Compte getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Compte utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 }
