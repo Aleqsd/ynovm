@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="${pageContext.request.contextPath}/styles/style.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/style.css" rel="stylesheet" type="text/css">
 <title>Gestion météo Ynov</title>
 </head>
 <body>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
 
 /**
@@ -46,7 +47,7 @@ public class RedemarrerServlet extends HttpServlet {
 		try {
 			Manager.getInstance().redemarrer(Integer.parseInt(id));
 			request.setAttribute("message", "OK");
-		} catch (StationException e) {
+		} catch (StationException | NumberFormatException | ProfileException e) {
 			request.setAttribute("message", e.getMessage());
 		}
 		request.getRequestDispatcher("mappemonde.jsp").forward(request, response);

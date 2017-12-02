@@ -57,10 +57,9 @@ CREATE TABLE IF NOT EXISTS `station` (
 --
 
 INSERT INTO `station` (`id`, `x`, `y`, `nom`, `localisation`, `temperature`, `hygrometrie`, `nebulosite`, `anemometre`, `pluviometrie`, `remarques`, `etat`, `etat_Pluvio`, `etat_Anemo`, `etat_Nebul`, `etat_Hygro`, `etat_Temp`, `h_restart`, `type`) VALUES
-(1, 7, 8, 'AlphaStation', 'Bretagne', 0, 56, 4, 92, 57, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 0),
-(3, 7, 8, 'CharlieStation', 'Marseille', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 0),
-(4, 7, 8, 'DeltaStation', 'Paris', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1),
-(2, 7, 8, 'BetaStation', 'Aix', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1);
+(1, 250, 100, 'Paris', 'Paris', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1),
+(2, 310, 330, 'Marseille', 'Marseille', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 0),
+(3, 100, 330, 'Aix', 'Aix', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

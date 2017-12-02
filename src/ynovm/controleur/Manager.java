@@ -13,9 +13,11 @@ import ynovm.stockage.DaoFactory;
 import ynovm.utilitaire.DaoEnum;
 import ynovm.utilitaire.EtatAppareil;
 import ynovm.utilitaire.EtatStation;
+import ynovm.utilitaire.Profile;
 import ynovm.utilitaire.TypeStation;
 import ynovm.service.Compte;
 import ynovm.modele.technique.ConnexionException;
+import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
 import ynovm.modele.technique.StationManagee;
 import ynovm.service.StationPOJO;
@@ -28,7 +30,7 @@ public final class Manager {
 	private Manager() {
 		lesStations = new Vector<>();
 		init();
-		// initEJB();
+		//initEJB();
 	}
 
 	private void init() {
@@ -97,36 +99,34 @@ public final class Manager {
 		return instance;
 	}
 
-	public void redemarrer(int id) throws StationException {
-		StationManagee sm = null;
-		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id) {
-				sm = a;
+	public void redemarrer(int id) throws StationException, ProfileException {
+		if(utilisateur.getProfile() == Profile.ADMINISTRATEUR)
+		{
+			StationManagee sm = null;
+			for (StationManagee a : lesStations) {
+				if (a.getPOJO().getId() == id) {
+					sm = a;
+				}
+					
 			}
-				
+			sm.redemarrer();
 		}
-		sm.redemarrer();
+		else
+			throw new ProfileException("Vous devez être Administrateur pour effectuer cette action.");
 	}
 	
-	public void reinitialiser(int id, String appareil) throws StationException {
-		StationManagee sm = null;
-		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id) {
-				sm = a;
+	public void reinitialiser(int id, String appareil) throws StationException, ProfileException {
+		if((utilisateur.getProfile() == Profile.SUPERVISEUR) && (utilisateur.getProfile() == Profile.SUPERVISEUR)) {
+			StationManagee sm = null;
+			for (StationManagee a : lesStations) {
+				if (a.getPOJO().getId() == id) {
+					sm = a;
+				}
 			}
-				
+			sm.reinitialiser(appareil);
 		}
-		sm.reinitialiser(appareil);
-	}
-	
-	public void create_panne(int id, String appareil) throws StationException {
-		StationManagee sm = null;
-		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id) {
-				sm = a;
-			}				
-		}
-		sm.create_panne(appareil);
+		else
+			throw new ProfileException("Vous ne devez pas être Controleur pour effectuer cette action.");
 	}
 	
 	public void create_random_mesure_all(int id) {
@@ -141,46 +141,57 @@ public final class Manager {
 
 	// Ajout d'une nouvelle station autonome par defaut et avec un etat en marche
 	public void ajouter(int id, int x, int y, String nom, String localisation, double temperature, double hygrometrie,
-			int nebulosite, int anemometre, int pluviometrie, String remarques, TypeStation type) {
-		StationPOJO sp = new StationPOJO();
-		sp.setId(id);
-		sp.setX(x);
-		sp.setY(y);
-		sp.setNom(nom);
-		sp.setLocalisation(localisation);
-		sp.setTemperature(temperature);
-		sp.setHygrometrie(hygrometrie);
-		sp.setNebulosite(nebulosite);
-		sp.setAnemometre(anemometre);
-		sp.setPluviometrie(pluviometrie);
-		sp.setRemarques(remarques);
-		sp.setEtat(EtatStation.EN_MARCHE);
-		sp.setEtat_Anemo(EtatAppareil.OPERATIONNEL);
-		sp.setEtat_Hygro(EtatAppareil.OPERATIONNEL);
-		sp.setEtat_Temp(EtatAppareil.OPERATIONNEL);
-		sp.setEtat_Pluvio(EtatAppareil.OPERATIONNEL);
-		sp.setEtat_Nebul(EtatAppareil.OPERATIONNEL);
-		sp.setType(type);
+			int nebulosite, int anemometre, int pluviometrie, String remarques, TypeStation type) throws ProfileException {
+		if(utilisateur.getProfile() == Profile.ADMINISTRATEUR) {
+			StationPOJO sp = new StationPOJO();
+			sp.setId(id);
+			sp.setX(x);
+			sp.setY(y);
+			sp.setNom(nom);
+			sp.setLocalisation(localisation);
+			sp.setTemperature(temperature);
+			sp.setHygrometrie(hygrometrie);
+			sp.setNebulosite(nebulosite);
+			sp.setAnemometre(anemometre);
+			sp.setPluviometrie(pluviometrie);
+			sp.setRemarques(remarques);
+			sp.setEtat(EtatStation.EN_MARCHE);
+			sp.setEtat_Anemo(EtatAppareil.OPERATIONNEL);
+			sp.setEtat_Hygro(EtatAppareil.OPERATIONNEL);
+			sp.setEtat_Temp(EtatAppareil.OPERATIONNEL);
+			sp.setEtat_Pluvio(EtatAppareil.OPERATIONNEL);
+			sp.setEtat_Nebul(EtatAppareil.OPERATIONNEL);
+			sp.setType(type);
 
-		lesStations.add(new StationManagee(sp, DaoFactory.getInstance().getDao(DaoEnum.JPA)));
-		lesStations.lastElement().ajouter(sp);
+			lesStations.add(new StationManagee(sp, DaoFactory.getInstance().getDao(DaoEnum.JPA)));
+			lesStations.lastElement().ajouter(sp);
+		}
+		else
+			throw new ProfileException("Vous devez être Administrateur pour effectuer cette action.");
 	}
 
 	// suppression d'une station avec l'id indiquer
-	public void supprimer(int id) throws StationException {
-		StationManagee sm = null;
-		for (StationManagee a : lesStations) {
-			if (a.getPOJO().getId() == id) {
-				sm = a;
+	public void supprimer(int id) throws StationException, ProfileException {
+		if(utilisateur.getProfile() == Profile.ADMINISTRATEUR) {
+			StationManagee sm = null;
+			for (StationManagee a : lesStations) {
+				if (a.getPOJO().getId() == id) {
+					sm = a;
+				}
 			}
-		}
-		if (sm == null)
-			throw new StationException("Station " + id + " non trouvé !");
-		sm.supprimer();
-		lesStations.remove(sm);
+			if (sm == null)
+				throw new StationException("Station " + id + " non trouvé !");
+			sm.supprimer();
+			lesStations.remove(sm);
+		}		
+		else
+			throw new ProfileException("Vous devez être Administrateur pour effectuer cette action.");
 	}
 
-	public String getStationById(int id) throws StationException {
+	public String getStationById(int id) throws StationException, ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		String ret = "";
 		for (StationManagee a : lesStations) {
 			if (a.getPOJO().getId() == id) {
@@ -193,7 +204,10 @@ public final class Manager {
 		return ret;
 	}
 
-	public List<String> getStationsByName(String name) throws StationException {
+	public List<String> getStationsByName(String name) throws StationException, ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		List<String> ret = null;
 		ret = new Vector<>();
 		for (StationManagee a : lesStations) {
@@ -207,7 +221,10 @@ public final class Manager {
 		return ret;
 	}
 
-	public List<String> getStationsByLocalisation(String localisation) throws StationException {
+	public List<String> getStationsByLocalisation(String localisation) throws StationException, ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		List<String> ret = null;
 		ret = new Vector<>();
 		for (StationManagee a : lesStations) {
@@ -221,7 +238,10 @@ public final class Manager {
 		return ret;
 	}
 
-	public List<String> getStationsByEtat(EtatStation etat) throws StationException {
+	public List<String> getStationsByEtat(EtatStation etat) throws StationException, ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		List<String> ret = null;
 		ret = new Vector<>();
 		for (StationManagee a : lesStations) {
@@ -235,7 +255,10 @@ public final class Manager {
 		return ret;
 	}
 
-	public List<String> getStationsByType(TypeStation type) throws StationException {
+	public List<String> getStationsByType(TypeStation type) throws StationException, ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		List<String> ret = null;
 		ret = new Vector<>();
 		for (StationManagee a : lesStations) {
@@ -249,7 +272,10 @@ public final class Manager {
 		return ret;
 	}
 
-	public List<String> getStations() {
+	public List<String> getStations() throws ProfileException {
+		if((utilisateur.getProfile() != Profile.CONTROLEUR) && (utilisateur.getProfile() != Profile.SUPERVISEUR) && (utilisateur.getProfile() != Profile.ADMINISTRATEUR)) {
+			throw new ProfileException("Vous n'êtes pas autorisé à effectuer cette action...");
+		}
 		List<String> ret = null;
 		ret = new Vector<>();
 		for (StationManagee a : lesStations) {

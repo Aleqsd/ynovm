@@ -66,62 +66,6 @@ public class StationManagee {
 		return sp;
 	}
 	
-	public void create_panne(String appareil) throws StationException {
-		if(station != null) {
-			switch (appareil.toLowerCase()) {
-			case "temperature":	
-				if(sp.getEtat_Anemo() != EtatAppareil.EN_PANNE) {
-					sp.setEtat_Temp(EtatAppareil.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car l'appareil: "+appareil+", est deja en Panne...");
-				break;
-			case "hygrometrie":
-				if(sp.getEtat_Hygro() != EtatAppareil.EN_PANNE) {
-					sp.setEtat_Hygro(EtatAppareil.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car l'appareil: "+appareil+", est deja en Panne...");
-				break;				
-			case "nebulosite":
-				if(sp.getEtat_Nebul() != EtatAppareil.EN_PANNE) {
-					sp.setEtat_Nebul(EtatAppareil.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car l'appareil: "+appareil+", est deja en Panne...");			
-				break;
-			case "anemometre":
-				if(sp.getEtat_Anemo() != EtatAppareil.EN_PANNE) {
-					sp.setEtat_Anemo(EtatAppareil.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car l'appareil: "+appareil+", est deja en Panne...");			
-				break;
-			case "pluviometrie":
-				if(sp.getEtat_Pluvio() != EtatAppareil.EN_PANNE) {
-					sp.setEtat_Pluvio(EtatAppareil.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car l'appareil: "+appareil+", est deja en Panne...");
-				
-				break;
-			default:
-				if(sp.getEtat() != EtatStation.EN_PANNE){
-					sp.setEtat(EtatStation.EN_PANNE);
-					dao.update(cle, sp);
-				}
-				else
-					throw new StationException("Impossible de créer la panne car la station: "+sp.getNom()+", est deja en Panne...");
-				break;
-			}
-		}
-	}
-	
 	public void create_random_mesure_all() {
 		if(station != null) {
 			sp.setAnemometre((int)(1+Math.random()*100));
