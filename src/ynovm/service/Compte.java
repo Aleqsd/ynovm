@@ -16,17 +16,16 @@ public class Compte implements Serializable {
 	private int id;
     private String login;
     private String password;
-    private Profile Profile;
+    private Profile profile;
     
     public Compte() {
     	super();
     }
-
     
     public Compte(String identifiant, String mdp, int profile) {
         this.login = identifiant;
         this.password = mdp;
-        this.Profile = Profile.values()[profile];
+        this.profile = Profile.values()[profile];
     }
 
     public String getlogin() {
@@ -46,15 +45,14 @@ public class Compte implements Serializable {
     }
 
     public Profile getProfile() {
-        return Profile;
+        return profile;
     }
 
     public void setProfile(Profile typeProfile) {
-        this.Profile = typeProfile;
+        this.profile = typeProfile;
     }  
-    
-    @Override
-    public String toString() {
-    	return "je m'appel "+this.getlogin()+" je suis un "+this.getProfile();
+
+    public int getId() {
+        return this.id;
     }
 }
