@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import ynovm.utilitaire.EtatAppareil;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
 
@@ -41,12 +42,19 @@ public class StationPOJO implements Serializable{
 	private int pluviometrie;
 	private String remarques;
 	private EtatStation etat;
-	private TypeStation type;
+	private EtatAppareil etat_Temp;
+	private EtatAppareil etat_Hygro;
+	private EtatAppareil etat_Nebul;
+	private EtatAppareil etat_Anemo;
+	private EtatAppareil etat_Pluvio;
+	private TypeStation type;	
 	
+
+
 	public StationPOJO() {
 		super();
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -163,4 +171,43 @@ public class StationPOJO implements Serializable{
 		this.type = type;
 	}	
 	
+	public EtatAppareil getEtat_Temp() {
+		return etat_Temp;
+	}
+
+	public void setEtat_Temp(EtatAppareil etat_Temp) {
+		this.etat_Temp = etat_Temp;
+	}
+
+	public EtatAppareil getEtat_Hygro() {
+		return etat_Hygro;
+	}
+
+	public void setEtat_Hygro(EtatAppareil etat_Hygro) {
+		this.etat_Hygro = etat_Hygro;
+	}
+
+	public EtatAppareil getEtat_Nebul() {
+		return etat_Nebul;
+	}
+
+	public void setEtat_Nebul(EtatAppareil etat_Nebul) {
+		this.etat_Nebul = etat_Nebul;
+	}
+
+	public EtatAppareil getEtat_Anemo() {
+		return etat_Anemo;
+	}
+
+	public void setEtat_Anemo(EtatAppareil etat_Anemo) {
+		this.etat_Anemo = etat_Anemo;
+	}
+
+	public EtatAppareil getEtat_Pluvio() {
+		return etat_Pluvio;
+	}
+
+	public void setEtat_Pluvio(EtatAppareil etat_Pluvio) {
+		this.etat_Pluvio = etat_Pluvio;
+	}
 }

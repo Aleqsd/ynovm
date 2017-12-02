@@ -7,6 +7,7 @@ import java.util.Date;
 
 import ynovm.modele.technique.StationException;
 import ynovm.stockage.*;
+import ynovm.utilitaire.EtatAppareil;
 import ynovm.utilitaire.EtatStation;
 import ynovm.utilitaire.TypeStation;
 
@@ -31,6 +32,12 @@ public class Station {
 	private EtatStation etat;
 	private long h_restart;
 	private TypeStation type;
+	
+	private EtatAppareil etat_Temp;
+	private EtatAppareil etat_Hygro;
+	private EtatAppareil etat_Nebul;
+	private EtatAppareil etat_Anemo;
+	private EtatAppareil etat_Pluvio;
 
 	/**
 	 * 
@@ -54,6 +61,11 @@ public class Station {
 	 * @param etat
 	 * @param h_restart
 	 * @param type
+	 * @param etat_Temp
+	 * @param etat_Hygro
+	 * @param etat_Nebul
+	 * @param etat_Anemo
+	 * @param etat_Pluvio
 	 */
 	public Station(int id, int x, int y, String nom, String localisation, double temperature, double hygrometrie,
 			int nebulosite, int anemometre, int pluviometrie, String remarques, TypeStation type) {
@@ -69,10 +81,57 @@ public class Station {
 		this.anemometre = anemometre;
 		this.pluviometrie = pluviometrie;
 		this.remarques = remarques;
-		this.etat = EtatStation.EN_MARCHE;
 		this.type = type;
+		this.etat = EtatStation.EN_MARCHE;
+		this.etat_Temp = EtatAppareil.OPERATIONNEL;
+		this.etat_Anemo = EtatAppareil.OPERATIONNEL;
+		this.etat_Hygro = EtatAppareil.OPERATIONNEL;
+		this.etat_Nebul = EtatAppareil.OPERATIONNEL;
+		this.etat_Pluvio = EtatAppareil.OPERATIONNEL;
+		
+		
 	}
 	
+	public EtatAppareil getEtat_Temp() {
+		return etat_Temp;
+	}
+
+	public void setEtat_Temp(EtatAppareil etat_Temp) {
+		this.etat_Temp = etat_Temp;
+	}
+
+	public EtatAppareil getEtat_Hygro() {
+		return etat_Hygro;
+	}
+
+	public void setEtat_Hygro(EtatAppareil etat_Hygro) {
+		this.etat_Hygro = etat_Hygro;
+	}
+
+	public EtatAppareil getEtat_Nebul() {
+		return etat_Nebul;
+	}
+
+	public void setEtat_Nebul(EtatAppareil etat_Nebul) {
+		this.etat_Nebul = etat_Nebul;
+	}
+
+	public EtatAppareil getEtat_Anemo() {
+		return etat_Anemo;
+	}
+
+	public void setEtat_Anemo(EtatAppareil etat_Anemo) {
+		this.etat_Anemo = etat_Anemo;
+	}
+
+	public EtatAppareil getEtat_Pluvio() {
+		return etat_Pluvio;
+	}
+
+	public void setEtat_Pluvio(EtatAppareil etat_Pluvio) {
+		this.etat_Pluvio = etat_Pluvio;
+	}
+
 	public void redemarrer() throws StationException {
 		if(this.getEtat() == EtatStation.EN_PANNE) {
 			throw new StationException("Impossible de redémarrer : la station est en panne");
@@ -89,9 +148,9 @@ public class Station {
 	@Override
 	public String toString() {
 		return "Station [id=" + id + ", x=" + x + ", y=" + y + ", nom=" + nom + ", localisation=" + localisation
-				+ ", temperature=" + temperature + ", hygrometrie=" + hygrometrie + ", nebulosite=" + nebulosite
-				+ ", anemometre=" + anemometre + ", pluviometrie=" + pluviometrie + ", remarques=" + remarques
-				+ ", etat=" + etat + ", type=" + type + "]";
+				+ ", [temperature=" + temperature + ", Etat :"+etat_Temp+"]" + ", [hygrometrie=" + hygrometrie + ", Etat :"+etat_Hygro+"]" + ", [nebulosite=" + nebulosite + ", Etat :"+etat_Nebul+"]"
+				+ ", [anemometre=" + anemometre + ", Etat :"+etat_Anemo+"]" + ", [pluviometrie=" + pluviometrie + ", Etat :"+etat_Pluvio+"]" + ", remarques=" + remarques
+				+ ", Etat Station=" + etat + ", type=" + type + "]";
 	}
 
 	/**
