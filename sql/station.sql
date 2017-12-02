@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 25 nov. 2017 à 11:53
+-- Généré le :  sam. 02 déc. 2017 à 14:49
 -- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Version de PHP :  7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `projetjee`
+-- Base de données :  `ynovm`
 --
 
 -- --------------------------------------------------------
@@ -42,18 +42,25 @@ CREATE TABLE IF NOT EXISTS `station` (
   `pluviometrie` int(11) DEFAULT NULL,
   `remarques` text,
   `etat` int(11) NOT NULL,
+  `etat_Pluvio` int(11) NOT NULL,
+  `etat_Anemo` int(11) NOT NULL,
+  `etat_Nebul` int(11) NOT NULL,
+  `etat_Hygro` int(11) NOT NULL,
+  `etat_Temp` int(11) NOT NULL,
+  `h_restart` bigint(20) DEFAULT NULL,
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `station`
 --
 
-INSERT INTO `station` (`id`, `x`, `y`, `nom`, `localisation`, `temperature`, `hygrometrie`, `nebulosite`, `anemometre`, `pluviometrie`, `remarques`, `etat`, `type`) VALUES
-(1, 1, 2, 'Paris', 'Paris', 7.2, 88, 12, 3, 16, NULL, 0, 0),
-(2, 1, 0, 'Marseille', 'Marseille', 24, 0.5, 1, 13, 1, NULL, 3, 1),
-(3, 0, 0, 'Aix-en-Provence', 'Aix-en-Provence', 25, 0.9, 2, 11, 0, NULL, 2, 0);
+INSERT INTO `station` (`id`, `x`, `y`, `nom`, `localisation`, `temperature`, `hygrometrie`, `nebulosite`, `anemometre`, `pluviometrie`, `remarques`, `etat`, `etat_Pluvio`, `etat_Anemo`, `etat_Nebul`, `etat_Hygro`, `etat_Temp`, `h_restart`, `type`) VALUES
+(1, 7, 8, 'AlphaStation', 'Bretagne', 0, 56, 4, 92, 57, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 0),
+(3, 7, 8, 'CharlieStation', 'Marseille', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 0),
+(4, 7, 8, 'DeltaStation', 'Paris', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1),
+(2, 7, 8, 'BetaStation', 'Aix', 17, 4, 5, 8, 7, 'RAS', 3, 2, 2, 2, 2, 2, NULL, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
