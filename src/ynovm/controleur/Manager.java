@@ -116,7 +116,7 @@ public final class Manager {
 	}
 	
 	public void reinitialiser(int id, String appareil) throws StationException, ProfileException {
-		if(utilisateur.getProfile() != Profile.CONTROLEUR) {
+		if((utilisateur.getProfile() == Profile.SUPERVISEUR) && (utilisateur.getProfile() == Profile.SUPERVISEUR)) {
 			StationManagee sm = null;
 			for (StationManagee a : lesStations) {
 				if (a.getPOJO().getId() == id) {
