@@ -32,7 +32,16 @@ public class RedemarrerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String id = request.getParameter("id");
+		
+		try {
+			Manager.getInstance().redemarrer(Integer.parseInt(id));
+			request.setAttribute("message", "OK");
+		} catch (StationException | NumberFormatException | ProfileException e) {
+			request.setAttribute("message", e.getMessage());
+		}
+		response.sendRedirect("choice.jsp");
+	
 	}
 	
 	/**
@@ -42,16 +51,7 @@ public class RedemarrerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String id = request.getParameter("id");
-		
-		try {
-			Manager.getInstance().redemarrer(Integer.parseInt(id));
-			request.setAttribute("message", "OK");
-		} catch (StationException | NumberFormatException | ProfileException e) {
-			request.setAttribute("message", e.getMessage());
-		}
-		request.getRequestDispatcher("mappemonde.jsp").forward(request, response);
-		request.getRequestDispatcher("tableau.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

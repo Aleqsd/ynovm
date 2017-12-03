@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ynovm.modele.technique.ProfileException;
 import ynovm.modele.technique.StationException;
@@ -29,11 +30,10 @@ public class SupprimerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 	}
+
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -41,17 +41,14 @@ public class SupprimerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String id = request.getParameter("id");
+		String id = request.getParameter("station");
 		
 		try {
 			Manager.getInstance().supprimer(Integer.parseInt(id));
 			request.setAttribute("message", "OK");
 		} catch (StationException | NumberFormatException | ProfileException e) {
 			request.setAttribute("message", e.getMessage());
-		}
-		request.getRequestDispatcher("mappemonde.jsp").forward(request, response);
-		request.getRequestDispatcher("tableau.jsp").forward(request, response);
-	}
-
+		}		
+		response.sendRedirect("choice.jsp");
+}
 }

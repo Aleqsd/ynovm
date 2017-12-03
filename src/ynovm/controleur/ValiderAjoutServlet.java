@@ -13,7 +13,7 @@ import ynovm.utilitaire.TypeStation;
 /**
  * Servlet implementation class ValiderAjoutServlet
  */
-@WebServlet("/ValiderAjoutServlet")
+@WebServlet("/validerajout")
 public class ValiderAjoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
